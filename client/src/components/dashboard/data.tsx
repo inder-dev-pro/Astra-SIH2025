@@ -31,17 +31,19 @@ export default function Data() {
 
   if (!selectedBuoy) {
     return (
-      <div className="border-t border-slate-700/50 bg-gradient-to-br from-slate-900 to-slate-800 text-sm text-slate-400 h-[30%] flex flex-col items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-cyan-500/5"></div>
+      <div className="border-t border-slate-700/50 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-sm text-slate-400 h-[30%] flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-purple-500/5 to-fuchsia-500/5"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-600/10 via-transparent to-transparent"></div>
+        
         <div className="relative z-10 text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
-            <span className="text-2xl">📍</span>
+          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-800/80 to-slate-700/80 border border-slate-600/30 flex items-center justify-center backdrop-blur-sm shadow-2xl">
+            <span className="text-3xl">📊</span>
           </div>
-          <p className="text-lg font-medium text-slate-300 mb-2">
+          <p className="text-xl font-bold text-slate-200 mb-3 tracking-wide">
             No Buoy Selected
           </p>
-          <p className="text-slate-500">
-            Click on a buoy marker to view detailed data
+          <p className="text-slate-400 font-medium">
+            Click on a buoy marker to view detailed analytics
           </p>
         </div>
       </div>
@@ -52,23 +54,31 @@ export default function Data() {
   const metricConfig = {
     temperature: {
       icon: "🌡️",
-      color: "from-red-400 to-orange-400",
-      bgColor: "bg-red-500/10",
+      color: "from-orange-400 via-red-400 to-pink-400",
+      bgColor: "bg-gradient-to-br from-orange-500/15 to-red-500/15",
+      borderColor: "border-orange-400/30",
+      shadowColor: "shadow-orange-500/20",
     },
     salinity: {
       icon: "🧂",
-      color: "from-blue-400 to-cyan-400",
-      bgColor: "bg-blue-500/10",
+      color: "from-indigo-400 via-purple-400 to-violet-400",
+      bgColor: "bg-gradient-to-br from-indigo-500/15 to-purple-500/15",
+      borderColor: "border-indigo-400/30",
+      shadowColor: "shadow-indigo-500/20",
     },
     density: {
       icon: "⚖️",
-      color: "from-purple-400 to-pink-400",
-      bgColor: "bg-purple-500/10",
+      color: "from-emerald-400 via-teal-400 to-cyan-400",
+      bgColor: "bg-gradient-to-br from-emerald-500/15 to-teal-500/15",
+      borderColor: "border-emerald-400/30",
+      shadowColor: "shadow-emerald-500/20",
     },
     depth: {
       icon: "🌊",
-      color: "from-cyan-400 to-blue-400",
-      bgColor: "bg-cyan-500/10",
+      color: "from-amber-400 via-yellow-400 to-orange-400",
+      bgColor: "bg-gradient-to-br from-amber-500/15 to-yellow-500/15",
+      borderColor: "border-amber-400/30",
+      shadowColor: "shadow-amber-500/20",
     },
   };
 
@@ -81,20 +91,20 @@ export default function Data() {
     let backgroundColor = "";
     switch (metric) {
       case "temperature":
-        borderColor = "rgba(239, 68, 68, 1)";
-        backgroundColor = "rgba(239, 68, 68, 0.1)";
+        borderColor = "rgba(251, 146, 60, 1)";
+        backgroundColor = "rgba(251, 146, 60, 0.15)";
         break;
       case "salinity":
-        borderColor = "rgba(59, 130, 246, 1)";
-        backgroundColor = "rgba(59, 130, 246, 0.1)";
+        borderColor = "rgba(129, 140, 248, 1)";
+        backgroundColor = "rgba(129, 140, 248, 0.15)";
         break;
       case "density":
-        borderColor = "rgba(147, 51, 234, 1)";
-        backgroundColor = "rgba(147, 51, 234, 0.1)";
+        borderColor = "rgba(52, 211, 153, 1)";
+        backgroundColor = "rgba(52, 211, 153, 0.15)";
         break;
       case "depth":
-        borderColor = "rgba(6, 182, 212, 1)";
-        backgroundColor = "rgba(6, 182, 212, 0.1)";
+        borderColor = "rgba(251, 191, 36, 1)";
+        backgroundColor = "rgba(251, 191, 36, 0.15)";
         break;
     }
     return {
@@ -106,11 +116,11 @@ export default function Data() {
       backgroundColor,
       tension: 0.4,
       borderWidth: 3,
-      pointRadius: 4,
-      pointHoverRadius: 6,
+      pointRadius: 5,
+      pointHoverRadius: 8,
       pointBackgroundColor: borderColor,
-      pointBorderColor: "#fff",
-      pointBorderWidth: 2,
+      pointBorderColor: "#0f172a",
+      pointBorderWidth: 3,
       fill: true,
     };
   });
@@ -121,13 +131,16 @@ export default function Data() {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: "rgba(15, 23, 42, 0.9)",
+        backgroundColor: "rgba(2, 6, 23, 0.95)",
         titleColor: "#f8fafc",
         bodyColor: "#e2e8f0",
-        borderColor: "#334155",
+        borderColor: "#475569",
         borderWidth: 1,
-        cornerRadius: 8,
-        padding: 12,
+        cornerRadius: 12,
+        padding: 16,
+        displayColors: false,
+        titleFont: { size: 14, weight: 600 },
+        bodyFont: { size: 13 },
       },
     },
     scales: {
@@ -136,72 +149,87 @@ export default function Data() {
           display: true,
           text: "Time (record index per year)",
           color: "#94a3b8",
-          font: { size: 12 },
+          font: { size: 13, weight: 500 },
         },
-        grid: { color: "rgba(148, 163, 184, 0.1)" },
-        ticks: { color: "#64748b", font: { size: 11 } },
+        grid: { 
+          color: "rgba(148, 163, 184, 0.08)",
+          lineWidth: 1,
+        },
+        ticks: { 
+          color: "#64748b", 
+          font: { size: 11 },
+          padding: 8,
+        },
       },
       y: {
         title: {
           display: true,
           text: "Value",
           color: "#94a3b8",
-          font: { size: 12 },
+          font: { size: 13, weight: 500 },
         },
-        grid: { color: "rgba(148, 163, 184, 0.1)" },
-        ticks: { color: "#64748b", font: { size: 11 } },
+        grid: { 
+          color: "rgba(148, 163, 184, 0.08)",
+          lineWidth: 1,
+        },
+        ticks: { 
+          color: "#64748b", 
+          font: { size: 11 },
+          padding: 8,
+        },
       },
     },
   };
 
   return (
-    <div className="border-t border-slate-700/50 bg-gradient-to-br from-slate-900 to-slate-800 h-[30%] flex relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5"></div>
+    <div className="border-t border-slate-700/50 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 h-[30%] flex relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-purple-500/5 to-fuchsia-500/5"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-600/10 via-transparent to-transparent"></div>
 
-      <div className="relative z-10 w-1/5 p-4 border-r border-slate-700/50 bg-slate-800/30 backdrop-blur-sm">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-3">
+      <div className="relative z-10 w-1/5 p-4 border-r border-slate-700/50 bg-slate-900/40 backdrop-blur-sm">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent mb-3 tracking-wide">
             Argo Data
           </h2>
-          <div className="w-12 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mb-4"></div>
+          <div className="w-16 h-1 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 rounded-full mb-4 shadow-lg shadow-violet-500/25"></div>
         </div>
 
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between items-center py-1">
-            <span className="text-slate-400 font-medium">ID:</span>
-            <span className="text-slate-200 font-mono">
+        <div className="space-y-3 text-sm">
+          <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-800/30 backdrop-blur-sm border border-slate-600/20">
+            <span className="text-slate-300 font-semibold">ID:</span>
+            <span className="text-white font-mono bg-slate-700/50 px-2 py-1 rounded text-xs">
               {selectedBuoy.buoyId}
             </span>
           </div>
-          <div className="flex justify-between items-center py-1">
-            <span className="text-slate-400 font-medium">Status:</span>
+          <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-800/30 backdrop-blur-sm border border-slate-600/20">
+            <span className="text-slate-300 font-semibold">Status:</span>
             <span
-              className={`px-2 py-1 rounded-full text-xs font-medium ${
+              className={`px-3 py-1 rounded-full text-xs font-bold tracking-wide ${
                 selectedBuoy.status === "active"
-                  ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                  : "bg-slate-500/20 text-slate-400 border border-slate-500/30"
+                  ? "bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-300 border border-emerald-400/40 shadow-lg shadow-emerald-500/20"
+                  : "bg-gradient-to-r from-slate-500/20 to-gray-500/20 text-slate-300 border border-slate-400/40"
               }`}
             >
-              {selectedBuoy.status}
+              {selectedBuoy.status.toUpperCase()}
             </span>
           </div>
-          <div className="flex justify-between items-center py-1">
-            <span className="text-slate-400 font-medium">Latitude:</span>
-            <span className="text-slate-200 font-mono">
-              {selectedBuoy.latitude.toFixed(4)}
+          <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-800/30 backdrop-blur-sm border border-slate-600/20">
+            <span className="text-slate-300 font-semibold">Latitude:</span>
+            <span className="text-white font-mono text-xs">
+              {selectedBuoy.latitude.toFixed(4)}°
             </span>
           </div>
-          <div className="flex justify-between items-center py-1">
-            <span className="text-slate-400 font-medium">Longitude:</span>
-            <span className="text-slate-200 font-mono">
-              {selectedBuoy.longitude.toFixed(4)}
+          <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-800/30 backdrop-blur-sm border border-slate-600/20">
+            <span className="text-slate-300 font-semibold">Longitude:</span>
+            <span className="text-white font-mono text-xs">
+              {selectedBuoy.longitude.toFixed(4)}°
             </span>
           </div>
         </div>
       </div>
 
       <div className="relative z-10 flex-1 flex flex-col w-[70%] p-4 pb-2">
-        <div className="h-full bg-slate-800/20 backdrop-blur-sm rounded-lg border border-slate-700/30 p-2">
+        <div className="h-full bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-sm rounded-2xl border border-slate-600/30 p-4 shadow-2xl shadow-slate-900/50">
           <Line
             data={{
               labels,
@@ -215,9 +243,10 @@ export default function Data() {
                   display: true,
                   text: `${
                     activeTab.charAt(0).toUpperCase() + activeTab.slice(1)
-                  } Trends`,
+                  } Analytics`,
                   color: "#f8fafc",
-                  font: { size: 16, weight: 600 },
+                  font: { size: 18, weight: 700 },
+                  padding: { bottom: 20 },
                 },
               },
             }}
@@ -229,23 +258,28 @@ export default function Data() {
         {metrics.map((metric, index) => (
           <button
             key={metric}
-            className={`h-1/4 text-xs font-medium transition-all duration-300 relative group overflow-hidden ${
+            className={`h-1/4 text-xs font-bold transition-all duration-500 relative group overflow-hidden ${
               activeTab === metric
-                ? `${metricConfig[metric].bgColor} text-white border-l-2 border-white shadow-lg`
-                : "text-slate-400 hover:text-white hover:bg-slate-700/30"
+                ? `${metricConfig[metric].bgColor} text-white border-l-4 ${metricConfig[metric].borderColor} shadow-xl ${metricConfig[metric].shadowColor}`
+                : "text-slate-400 hover:text-white hover:bg-gradient-to-r hover:from-slate-700/30 hover:to-slate-600/30"
             }`}
             onClick={() => setActiveTab(metric)}
           >
-            <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-            <div className="relative z-10 flex items-center justify-start h-full space-y-1">
-              <span className="text-lg m-[6px]">{metricConfig[metric].icon}</span>
-              <span className="capitalize leading-tight">{metric}</span>
+            <div className={`absolute inset-0 bg-gradient-to-r ${metricConfig[metric].color} opacity-0 group-hover:opacity-10 transition-all duration-500`}></div>
+            <div className="relative z-10 flex items-center justify-start h-full px-3 space-x-2">
+              <span className={`text-xl transition-transform duration-300 ${activeTab === metric ? 'scale-110' : 'group-hover:scale-105'}`}>
+                {metricConfig[metric].icon}
+              </span>
+              <span className="capitalize leading-tight tracking-wide">
+                {metric}
+              </span>
             </div>
             {activeTab === metric && (
               <div
-                className={`absolute left-0 top-0 w-1 h-full bg-gradient-to-b ${metricConfig[metric].color}`}
+                className={`absolute left-0 top-0 w-1 h-full bg-gradient-to-b ${metricConfig[metric].color} shadow-lg`}
               ></div>
             )}
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r ${metricConfig[metric].color} blur-xl scale-150 -z-10`}></div>
           </button>
         ))}
       </div>
